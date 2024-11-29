@@ -148,3 +148,34 @@ export const fetchExam = async (req, res) => {
         });
     }
 };
+
+// Function to search exams by student email
+export const getStudentExamSessions = async (req, res) => {
+    try {
+        const { emailId } = req.params; // Extract the emailId from the route params
+
+        // Query the database to find exams where the student is enrolled
+        const exams = await Exam.find({ "studentsEnrolled": emailId }, "sessionId courseCode durationOfExam description startTime");
+
+        // Map over the results to extract required data
+        const examDetails = exams.map((exam) => ({
+            sessionId: exam.sessionId,
+            courseCode: exam.courseCode,
+            durationOfExam: exam.durationOfExam,
+            description: exam.description,
+            startTime: exam.startTime,
+        }));
+
+        // Return the array of session details
+        res.status(200).json({
+            success: true,
+            exams: examDetails,
+        });
+    } catch (error) {
+        console.error("Error fetching exams for student:", error);
+        res.status(500).json({
+            success: false,
+            message: "An error occurred while fetching exams.",
+        });
+    }
+};

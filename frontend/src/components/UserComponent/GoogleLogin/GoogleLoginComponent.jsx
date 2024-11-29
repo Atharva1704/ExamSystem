@@ -36,7 +36,7 @@ const GoogleLoginComponent = () => {
             if (data.token) {
                 // Store the JWT token in localStorage
                 localStorage.setItem('token', data.token);
-
+                console.log(data.user);
                 // Store user data in the Redux store
                 dispatch(setLogin({
                     email: data.user.collegeId, jwtToken: data.token, role: data.user.role,

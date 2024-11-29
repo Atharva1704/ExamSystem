@@ -148,8 +148,14 @@ export const createExam = async (req, res) => {
             answerkey,
             studentsEnrolled,
             durationOfExam,
-            description
+            description,
+            startTime // Added startTime to the request body
         } = req.body;
+
+        // Ensure startTime is provided and is a valid date
+        if (!startTime || isNaN(new Date(startTime).getTime())) {
+            return res.status(400).json({ message: "Invalid or missing start time." });
+        }
 
         // Create a new Exam instance
         const newExam = new Exam({
@@ -160,6 +166,7 @@ export const createExam = async (req, res) => {
             studentsEnrolled,
             durationOfExam,
             description, // Optional field
+            startTime: new Date(startTime), // Store start time as a Date object
         });
 
         // Save the exam to the database

@@ -42,6 +42,10 @@ const examSchema = new mongoose.Schema(
                 return `${this.courseCode}-${Math.random().toString(36).substring(2, 10)}`; // Generates sessionId like "CS101-xyz123"
             },
         },
+        startTime: {
+            type: Date, // Timestamp for when the exam starts
+            required: true, // Ensure start time is provided
+        },
     },
     {
         timestamps: true, // Automatically adds `createdAt` and `updatedAt` timestamps

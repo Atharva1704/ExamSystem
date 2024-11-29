@@ -1,5 +1,6 @@
 import ApprovedResult from "../models/ApprovedResults.js"; // Import ApprovedResults model
 import Result from "../models/Result.js"; // Import Result schema
+import Exam from "../models/Exam.js";
 
 export const approveResult = async (req, res) => {
     try {
@@ -72,5 +73,40 @@ export const fetchAllApprovedResults = async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({ message: "Error fetching results", error: error.message });
+    }
+};
+
+
+// Controller function to update the start time of an exam
+export const updateExamStartTime = async (req, res) => {
+    try {
+        const { sessionId } = req.params; // Extract the sessionId from route params
+        const { startTime } = req.body; // Extract startTime from the request body
+
+        // Validate the startTime
+        if (!startTime || isNaN(new Date(startTime).getTime())) {
+            return res.status(400).json({ message: "Invalid or missing start time." });
+        }
+
+        // Find the exam by sessionId and update the start time
+        const updatedExam = await Exam.findOneAndUpdate(
+            { sessionId: sessionId }, // Search by sessionId
+            { startTime: new Date(startTime) }, // Update the startTime field
+            { new: true, runValidators: true } // Return the updated document and validate before saving
+        );
+
+        // If exam not found
+        if (!updatedExam) {
+            return res.status(404).json({ message: "Exam not found" });
+        }
+
+        // Send success response with the updated exam details
+        res.status(200).json({
+            message: "Exam start time updated successfully",
+            exam: updatedExam, // Return the updated exam document
+        });
+    } catch (error) {
+        // Handle any errors
+        res.status(500).json({ message: "Error updating start time", error: error.message });
     }
 };

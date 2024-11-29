@@ -17,8 +17,6 @@ const Logout = () => {
 
     return (
         <div className="logout-container">
-            <Button>hi</Button>
-            <Button variant="destructive">Button</Button>
             <Button onClick={handleLogout} variant="secondary">
                 Logout
             </Button>

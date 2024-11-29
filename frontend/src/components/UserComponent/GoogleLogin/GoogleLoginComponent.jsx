@@ -23,7 +23,7 @@ const GoogleLoginComponent = () => {
 
         try {
             // Send tokenId to backend for authentication
-            const res = await fetch('http://localhost:3001/auth/google/login', {
+            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/google/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ const GoogleLoginComponent = () => {
                     <p>College ID: {user.collegeId}</p>
                 </div>
             ) : (
-                <GoogleOAuthProvider clientId="54142449441-v5qhdcesruq0g0fn0g4mql20erun1edu.apps.googleusercontent.com">
+                <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
                     <GoogleLogin
                         onSuccess={responseGoogle}
                         onError={() => setError("Google login failed.")}

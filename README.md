@@ -66,3 +66,81 @@ ExamSystem is a secure and user-friendly MERN stack web application designed to 
    ```bash
    git clone https://github.com/your-username/ExamSystem.git
    cd ExamSystem
+
+2. Create a `.env` file in the `backend` directory:  
+    ```bash  
+    touch backend/.env  
+    ```  
+
+3. Add the following variables to the `.env` file:  
+    ```env  
+    PORT=3001  
+    MONGO_URL=mongodb://localhost:27017/exam-system  
+    JWT_SECRET=your_jwt_secret  
+    GOOGLE_CLIENT_ID=your_google_client_id  
+    GOOGLE_CLIENT_SECRET=your_google_client_secret  
+    ```  
+
+4. Install dependencies and start the server:  
+    ```bash  
+    cd backend  
+    npm install  
+    npm run dev  
+    ```  
+
+### Frontend Setup  
+
+1. Navigate to the frontend directory:  
+    ```bash  
+    cd ../frontend  
+    ```  
+
+2. Create a `.env` file in the `frontend` directory:  
+    ```bash  
+    touch .env  
+    ```  
+
+3. Add the following variables to the `.env` file:  
+    ```env  
+    VITE_BACKEND_URL=http://localhost:3001  
+    VITE_GOOGLE_CLIENT_ID=your_google_client_id  
+    ```  
+
+4. Install dependencies and start the development server:  
+    ```bash  
+    npm install  
+    npm run dev  
+    ```  
+
+## API Endpoints  
+
+### Authentication  
+- **POST /auth/google/login**  
+  Handles Google OAuth login.  
+
+### Student  
+- **GET /student/fetch/:sessionId**  
+  Fetches exam details for a student.  
+- **POST /student/submit-exam**  
+  Submits exam answers.  
+
+### Professor  
+- **GET /professor/view-responses**  
+  View student responses.  
+- **POST /professor/grade**  
+  Grade and forward results to the HOD.  
+
+### HOD  
+- **GET /hod/view-results**  
+  Review results submitted by professors.  
+- **POST /hod/approve-results**  
+  Approve and forward results to the Academic Coordinator.  
+
+### Academic Coordinator  
+- **POST /coordinator/schedule-exam**  
+  Schedule exams and allocate seating.  
+- **POST /coordinator/notify**  
+  Notify students and professors.  
+
+## Notes  
+Make sure to replace placeholders like `your_jwt_secret`, `your_google_client_id`, and `your_google_client_secret` with your actual credentials before running the application.

@@ -5,7 +5,7 @@ import { isStudent } from "../middlewares/checkRole.js";
 const router = express.Router();
 
 // Route to fetch exam details by courseCode
-router.get("/fetch/:sessionId", isStudent, fetchExam);
+router.get("/fetch/:sessionId", fetchExam);
 router.post("/submit-exam", isStudent, submitExam);
 router.get("/view-result/:sessionId", isStudent, viewResult);
 router.post("/submit-complaint", isStudent, submitComplaint);

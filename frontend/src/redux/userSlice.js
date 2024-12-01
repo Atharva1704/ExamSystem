@@ -1,4 +1,3 @@
-// src/redux/userSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 // Initial state for user
@@ -7,7 +6,8 @@ const initialState = {
     jwtToken: null,
     sessionId: null,
     grievanceId: null,
-    role: null, // Add role to the initial state
+    role: null, // User's role(s)
+    selectedRole: 1, // Default role set to 1 (student)
 };
 
 // Create the user slice
@@ -15,11 +15,12 @@ export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        // Action to set login data (email, jwtToken, and role)
+        // Action to set login data (email, jwtToken, role, and optionally selectedRole)
         setLogin: (state, action) => {
             state.email = action.payload.email;
             state.jwtToken = action.payload.jwtToken;
-            state.role = action.payload.role; // Add role to the state
+            state.role = action.payload.role; // Update roles
+            state.selectedRole = action.payload.selectedRole || 1; // Default to student role if not provided
         },
         // Action to set sessionId only
         setSessionId: (state, action) => {
@@ -29,19 +30,24 @@ export const userSlice = createSlice({
         setGrievanceId: (state, action) => {
             state.grievanceId = action.payload.grievanceId;
         },
+        // Action to set the selected role
+        setSelectedRole: (state, action) => {
+            state.selectedRole = action.payload.selectedRole;
+        },
         // Action to clear user data (logout)
         clearUserData: (state) => {
             state.email = null;
             state.jwtToken = null;
             state.sessionId = null;
             state.grievanceId = null;
-            state.role = null; // Clear the role as well
+            state.role = null;
+            state.selectedRole = 1; // Reset to default role (student)
         },
     },
 });
 
 // Export actions
-export const { setLogin, setSessionId, setGrievanceId, clearUserData } = userSlice.actions;
+export const { setLogin, setSessionId, setGrievanceId, setSelectedRole, clearUserData } = userSlice.actions;
 
 // Export selector to get user data from state
 export const selectUser = (state) => state.user;

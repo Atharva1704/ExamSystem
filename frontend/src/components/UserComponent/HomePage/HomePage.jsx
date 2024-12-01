@@ -1,28 +1,41 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import StudentNavbar from "../Navbar/StudentNavbar";
 import ProfNavbar from "../Navbar/ProfNavbar";
 import HoDNavbar from "../Navbar/HoDNavbar";
 import AcadNavbar from "../Navbar/AcadNavbar";
+import { useSelector, useDispatch } from "react-redux";
+import { setSelectedRole } from "../../../redux/userSlice";
 
 const HomePage = () => {
-    // Get the user's role from the Redux store
-    // console.log("Backend URL:", process.env.BACKEND_URL);
+    const dispatch = useDispatch();
 
-    const userRole = useSelector((state) => state.user.role);
-    // Render the appropriate Navbar based on the role
+    // Get roles and selectedRole from Redux store
+    const { role: roles, selectedRole } = useSelector((state) => state.user);
+
+    // Ensure selectedRole is valid, or default to the first available role
+    const validRoles = roles || []; // Ensure roles is an array
+    const activeRole = validRoles.includes(selectedRole) ? selectedRole : validRoles[0] || null;
+
+    React.useEffect(() => {
+        // If activeRole is invalid, set the first available role as selectedRole
+        if (activeRole !== selectedRole) {
+            dispatch(setSelectedRole({ selectedRole: activeRole }));
+        }
+    }, [activeRole, selectedRole, dispatch]);
+
+    // Navbar rendering based on activeRole
     const renderNavbar = () => {
-        switch (userRole) {
-            case "student":
+        switch (activeRole) {
+            case 1:
                 return <StudentNavbar />;
-            case "Professor":
+            case 2:
                 return <ProfNavbar />;
-            case "Head_of_Department":
+            case 3:
                 return <HoDNavbar />;
-            case "Academic_Coordinator":
+            case 4:
                 return <AcadNavbar />;
             default:
-                return null; // No navbar for undefined roles
+                return null; // No navbar if no valid role
         }
     };
 
@@ -41,12 +54,7 @@ const HomePage = () => {
                     <p className="text-center text-lg text-gray-600 mb-12">
                         Your one-stop platform for managing exams, grievances, and academic processes.
                     </p>
-                    <div className="bg-red-500 text-red p-4">
-                        Tailwind is working!
-                    </div>
-                    <div className="bg-primary text-red p-4">
-                        This is a div with the primary background color.
-                    </div>
+
                 </div>
             </main>
 

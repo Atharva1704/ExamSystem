@@ -19,20 +19,17 @@ import "./App.css";
 
 // Custom Protected Route Component
 const ProtectedRoute = ({ element, allowedRoles }) => {
-  const jwtToken = useSelector((state) => state.user.jwtToken);
-  const userRole = useSelector((state) => state.user.role);
+  const { role: userRoles } = useSelector((state) => state.user); // Get user roles from Redux store
 
-  // Check if user is authenticated and has the correct role
-  if (!jwtToken) {
-    return <Navigate to="/" replace />;
-  }
-  if (!allowedRoles.includes(userRole)) {
-    return <Navigate to="/home" replace />;
+  // Check if the user has any of the allowed roles
+  const hasAccess = userRoles.some((role) => allowedRoles.includes(role));
+
+  if (!hasAccess) {
+    return <Navigate to="/home" />; // Redirect to an unauthorized page or login
   }
 
-  return element;
+  return element; // If the user has access, render the component
 };
-
 function App() {
   const jwtToken = useSelector((state) => state.user.jwtToken);
   const isAuth = Boolean(jwtToken);
@@ -60,7 +57,7 @@ function App() {
         <Route
           path="/exam"
           element={
-            <ProtectedRoute element={<Exam />} allowedRoles={["student"]} />
+            <ProtectedRoute element={<Exam />} allowedRoles={[1]} />
           }
         />
         <Route

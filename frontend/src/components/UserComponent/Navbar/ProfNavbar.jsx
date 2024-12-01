@@ -1,8 +1,26 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Logout from "../Logout/Logout";
+import RoleSwitcher from "../RoleSwitcher/RoleSwitcher.jsx";
+import { useSelector, useDispatch } from "react-redux";
+import { setSelectedRole } from "../../../redux/userSlice";
 
 const ProfNavbar = () => {
+    const dispatch = useDispatch();
+
+    // Get roles and selectedRole from Redux store
+    const { role: roles, selectedRole } = useSelector((state) => state.user);
+
+    // Ensure selectedRole is valid, or default to the first available role
+    const validRoles = roles || []; // Ensure roles is an array
+    const activeRole = validRoles.includes(selectedRole) ? selectedRole : validRoles[0] || null;
+
+    React.useEffect(() => {
+        // If activeRole is invalid, set the first available role as selectedRole
+        if (activeRole !== selectedRole) {
+            dispatch(setSelectedRole({ selectedRole: activeRole }));
+        }
+    }, [activeRole, selectedRole, dispatch]);
     return (
         <nav className="bg-purple-600 text-white px-4 py-2 flex justify-between items-center shadow-md">
             {/* Title */}
@@ -23,6 +41,9 @@ const ProfNavbar = () => {
                 >
                     Check Exam
                 </Link>
+
+                {/* Role Switcher */}
+                <RoleSwitcher roles={validRoles} activeRole={activeRole} />
                 <Logout />
             </div>
         </nav>

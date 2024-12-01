@@ -70,7 +70,6 @@ export const login = async (req, res) => {
     }
 };
 
-
 export const registerUser = async (req, res) => {
     try {
         const { fullname, collegeId, role } = req.body;

@@ -110,3 +110,14 @@ export const updateExamStartTime = async (req, res) => {
         res.status(500).json({ message: "Error updating start time", error: error.message });
     }
 };
+
+
+export const getUndefinedStartTime = async (req, res) => {
+    try {
+        const exams = await Exam.find({ startTime: { $exists: false } }); // Fetch exams with undefined startTime
+        res.status(200).json(exams);
+    } catch (error) {
+        console.error("Error fetching exams with undefined start time:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+};

@@ -165,7 +165,7 @@ export const getStudentExamSessions = async (req, res) => {
             description: exam.description,
             startTime: exam.startTime,
         }));
-
+        console.log(examDetails);
         // Return the array of session details
         res.status(200).json({
             success: true,

@@ -30,6 +30,13 @@ const AcadNavbar = () => {
             {/* Links */}
             <div className="flex space-x-4">
                 <Link
+                    to="/set-exam-start"
+                    className="hover:bg-teal-700 px-3 py-2 rounded transition duration-200"
+                >
+                    Set Start Time
+                </Link>
+
+                <Link
                     to="/fetch-approved"
                     className="hover:bg-teal-700 px-3 py-2 rounded transition duration-200"
                 >

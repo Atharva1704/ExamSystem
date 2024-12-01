@@ -16,6 +16,7 @@ import Exam from "./components/UserComponent/Student/Exam";
 import ExamPage from "./components/UserComponent/Student/ExamPage";
 // import Result from "./components/Student/Result";
 import "./App.css";
+import SetStart from "./components/UserComponent/AcadComponents/SetStart";
 
 // Custom Protected Route Component
 const ProtectedRoute = ({ element, allowedRoles }) => {
@@ -62,12 +63,12 @@ function App() {
         />
         <Route
           path="/exam/:sessionId"
-          element={<ProtectedRoute element={<ExamPage />} allowedRoles={["student"]} />}
+          element={<ProtectedRoute element={<ExamPage />} allowedRoles={[1]} />}
         />
         {/* <Route
           path="/result"
           element={
-            <ProtectedRoute element={<Result />} allowedRoles={["student"]} />
+            <ProtectedRoute element={<Result />} allowedRoles={[1]} />
           }
         /> */}
 
@@ -99,9 +100,15 @@ function App() {
         {/* <Route
           path="/fetch-approved"
           element={
-            <ProtectedRoute element={<FetchApproved />} allowedRoles={["Academic_Coordinator"]} />
+            <ProtectedRoute element={<FetchApproved />} allowedRoles={[4]} />
           }
         />  */}
+        <Route
+          path="/set-exam-start"
+          element={
+            <ProtectedRoute element={<SetStart />} allowedRoles={[4]} />
+          }
+        />
       </Routes>
     </Router>
   );

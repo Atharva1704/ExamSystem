@@ -18,6 +18,7 @@ const ExamComponent = () => {
             try {
                 // Use BACKEND_URL from the environment variables
                 const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/student/${userEmail}`);
+                console.log(response.data.exams)
                 setExams(response.data.exams); // Assuming the response contains an array of exam details
                 setLoading(false); // Stop loading
             } catch (error) {
@@ -37,7 +38,7 @@ const ExamComponent = () => {
             // Fetch the exam start time and check if it has already passed
             const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/student/fetch/${sessionId}`);
             const exam = response.data.exam; // Assuming response contains exam details
-
+            console.log(exam);
             const currentTime = new Date();
             const startTime = new Date(exam.startTime);
 

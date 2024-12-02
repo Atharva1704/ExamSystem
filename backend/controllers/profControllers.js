@@ -25,7 +25,7 @@ export const submitMarksOfOneStudent = async (req, res) => {
                 sessionId,
                 courseCode,
                 professorEmail,
-                hodEmail,
+                hodEmail: hodEmail,
                 academicCoordinatorEmail,
                 marksObtained: new Map(),
                 studentsEvaluated: 0,

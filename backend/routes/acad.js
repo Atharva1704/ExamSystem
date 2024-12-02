@@ -4,7 +4,7 @@ import { isAcademicCoordinator } from "../middlewares/checkRole.js";
 const router = express.Router();
 
 // Route to fetch all approved results for the academic coordinator
-router.get("/fetch-approved-results", isAcademicCoordinator, fetchAllApprovedResults);
+router.get("/fetch-approved-results", fetchAllApprovedResults);
 router.put("/approve-result/:sessionId", approveResult);
 router.get("/undefined-start-time", getUndefinedStartTime);
 router.put("/set-start-time/:sessionId", updateExamStartTime);

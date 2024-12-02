@@ -17,6 +17,8 @@ import ExamPage from "./components/UserComponent/Student/ExamPage";
 // import Result from "./components/Student/Result";
 import "./App.css";
 import SetStart from "./components/UserComponent/AcadComponents/SetStart";
+import FetchApproved from "./components/UserComponent/AcadComponents/FetchApproved";
+import FetchUnapprovedResults from "./components/UserComponent/HodComponents/FetchUnapprovedResults";
 
 // Custom Protected Route Component
 const ProtectedRoute = ({ element, allowedRoles }) => {
@@ -73,13 +75,13 @@ function App() {
         /> */}
 
         {/* HoD Routes */}
-        {/* <Route
+        <Route
           path="/check-results"
           element={
-            <ProtectedRoute element={<CheckResults />} allowedRoles={["Head_of_Department"]} />
+            <ProtectedRoute element={<FetchUnapprovedResults />} allowedRoles={[3]} />
           }
         />
-        <Route
+        {/* <Route
           path="/approved-results"
           element={
             <ProtectedRoute element={<ApprovedResults />} allowedRoles={["Head_of_Department"]} />
@@ -97,12 +99,12 @@ function App() {
         /> */}
 
         {/* Academic Coordinator Routes */}
-        {/* <Route
+        <Route
           path="/fetch-approved"
           element={
             <ProtectedRoute element={<FetchApproved />} allowedRoles={[4]} />
           }
-        />  */}
+        />
         <Route
           path="/set-exam-start"
           element={

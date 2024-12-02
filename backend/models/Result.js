@@ -35,6 +35,10 @@ const resultSchema = new mongoose.Schema(
             type: Boolean,
             default: false, // Track if the academic coordinator has approved the result
         },
+        hodApproval: {
+            type: Boolean,
+            default: false, // Track if the HOD has approved the result
+        },
     },
     { timestamps: true } // Automatically adds `createdAt` and `updatedAt` fields
 );

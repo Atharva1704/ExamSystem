@@ -7,7 +7,7 @@ export const approveResult = async (req, res) => {
         const { sessionId } = req.params; // Get the sessionId from the URL params
         const { academicCoordinatorEmail } = req.body; // Get the academic coordinator email from request body
 
-        // Validate inputs
+        // Validate inputs  
         if (!sessionId || !academicCoordinatorEmail) {
             return res.status(400).json({ message: "Session ID and academic coordinator email are required." });
         }
@@ -60,12 +60,12 @@ export const fetchAllApprovedResults = async (req, res) => {
     try {
         // Fetch all results where academicCoordinatorApproval is false
         const results = await ApprovedResult.find({ academicCoordinatorApproval: false });
+        console.log(results);
 
         // If no results are found, return a 404 response
         if (results.length === 0) {
             return res.status(404).json({ message: "No results awaiting academic coordinator approval." });
         }
-
         // Return the results in the response
         res.status(200).json({
             message: "Fetched results awaiting academic coordinator approval.",

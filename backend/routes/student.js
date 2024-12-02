@@ -7,9 +7,8 @@ const router = express.Router();
 // Route to fetch exam details by courseCode
 router.get("/fetch/:sessionId", fetchExam);
 router.post("/submit-exam", submitExam);
-router.get("/view-result/:sessionId", viewResult);
+router.post("/view-result/:sessionId", viewResult);
 router.post("/submit-complaint", submitComplaint);
 router.get("/:emailId", getStudentExamSessions);
-
 
 export default router;

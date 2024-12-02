@@ -7,12 +7,12 @@ export const submitMarksOfOneStudent = async (req, res) => {
     try {
         const { sessionId, courseCode, marks, professorEmail, hodEmail, academicCoordinatorEmail } = req.body;
         const { studentEmail } = req.params; // Get the student's email from the URL parameters
-
+        console.log("inside submit one marks");
+        console.log("req body: ", req.body);
         // Validate inputs
         if (!sessionId || !courseCode || marks === undefined || !professorEmail || !hodEmail || !academicCoordinatorEmail) {
             return res.status(400).json({ message: "Session ID, course code, marks, and email details are required." });
         }
-
         // Sanitize the student email by replacing '.' with '_'
         const sanitizedEmail = studentEmail.replace(/\./g, "_");
 
@@ -34,7 +34,7 @@ export const submitMarksOfOneStudent = async (req, res) => {
             // Save the newly created result
             await result.save();
         }
-
+        console.log(result);
         // Check if marks for the student already exist
         if (result.marksObtained.has(sanitizedEmail)) {
             return res.status(400).json({ message: "Marks already submitted for this student." });
@@ -114,14 +114,13 @@ export const fetchSessionIdsByProfessor = async (req, res) => {
     }
 };
 
-
 export const fetchSubmissionsBySessionId = async (req, res) => {
     try {
         const { sessionId } = req.params; // Get the sessionId from the route params
 
         // Fetch all submissions for the given sessionId
         const submissions = await Submission.find({ sessionId });
-
+        console.log(submissions);
         // If no submissions found, return a 404 response
         if (submissions.length === 0) {
             return res.status(404).json({ message: "No submissions found for this session." });
@@ -149,13 +148,7 @@ export const createExam = async (req, res) => {
             studentsEnrolled,
             durationOfExam,
             description,
-            startTime // Added startTime to the request body
         } = req.body;
-
-        // Ensure startTime is provided and is a valid date
-        if (!startTime || isNaN(new Date(startTime).getTime())) {
-            return res.status(400).json({ message: "Invalid or missing start time." });
-        }
 
         // Create a new Exam instance
         const newExam = new Exam({
@@ -166,7 +159,6 @@ export const createExam = async (req, res) => {
             studentsEnrolled,
             durationOfExam,
             description, // Optional field
-            startTime: new Date(startTime), // Store start time as a Date object
         });
 
         // Save the exam to the database

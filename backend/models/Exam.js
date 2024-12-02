@@ -44,7 +44,7 @@ const examSchema = new mongoose.Schema(
         },
         startTime: {
             type: Date, // Timestamp for when the exam starts
-            required: true, // Ensure start time is provided
+            required: false, // Ensure start time is provided
         },
     },
     {

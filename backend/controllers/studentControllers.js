@@ -38,7 +38,7 @@ export const viewResult = async (req, res) => {
     try {
         const { sessionId } = req.params;  // Get sessionId from the request params
         const { studentEmail } = req.body;  // Assuming student's email is provided in the body
-
+        console.log(req.body);
         // Validate if studentEmail is provided
         if (!studentEmail) {
             return res.status(400).json({ message: "Student email is required." });

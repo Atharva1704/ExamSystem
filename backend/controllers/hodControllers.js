@@ -30,10 +30,23 @@ export const approveResultByHod = async (req, res) => {
                 await approvedResult.save();
             }
         }
-        console.log();
+        // Update the Result schema to set hodApproval as true
+        const resultUpdate = await Result.findOneAndUpdate(
+            { sessionId },
+            { hodApproval: true },
+            { new: true } // Return the updated document
+        );
+
+        if (!resultUpdate) {
+            return res.status(404).json({
+                message: "Result not found in Result schema for updating HOD approval.",
+            });
+        }
+
         res.status(200).json({
             message: "Result approved by HOD successfully",
             approvedResult,
+            updatedResult: resultUpdate,
         });
     } catch (error) {
         console.log(error);
@@ -44,14 +57,14 @@ export const approveResultByHod = async (req, res) => {
 export const fetchResults = async (req, res) => {
     try {
         const { hodEmail } = req.params; // Get HOD email from the route params
-
+        console.log("Inside ");
         if (!hodEmail) {
             return res.status(400).json({ message: "HOD email is required" });
         }
 
         // Fetch results where hodEmail matches and hodApproval is false
         const results = await Result.find({ hodEmail, hodApproval: false });
-        console.log(results);
+        // console.log(results);
         if (results.length === 0) {
             return res
                 .status(404)
@@ -85,3 +98,26 @@ export const fetchUnresolvedComplaints = async (req, res) => {
     }
 };
 
+
+
+export const getApprovedResults = async (req, res) => {
+    try {
+        // Fetch all approved results, sorted by approvalDate in reverse order
+        console.log("inside approved results");
+        const results = await ApprovedResult.find().sort({ approvalDate: -1 });
+
+        // If no results found, return a 404 response
+        if (results.length === 0) {
+            return res.status(404).json({ message: "No approved results found." });
+        }
+
+        // Return the results
+        res.status(200).json({
+            message: "Approved results fetched successfully.",
+            results,
+        });
+    } catch (error) {
+        console.error("Error fetching approved results:", error);
+        res.status(500).json({ message: "Error fetching approved results.", error: error.message });
+    }
+};

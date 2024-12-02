@@ -36,7 +36,7 @@ const HoDNavbar = () => {
                     Check Results
                 </Link>
                 <Link
-                    to="/approved-results"
+                    to="/hod/approved-results"
                     className="hover:bg-green-700 px-3 py-2 rounded transition duration-200"
                 >
                     Approved Results

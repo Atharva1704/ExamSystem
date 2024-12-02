@@ -22,7 +22,7 @@ const FetchUnapprovedResults = () => {
 
         try {
             const response = await axios.get(
-                `${import.meta.env.VITE_BACKEND_URL}/hod/${hodEmail}`
+                `${import.meta.env.VITE_BACKEND_URL}/hod/fetch-unapproved-results/${hodEmail}`
             );
             console.log(response.data);
             setUnapprovedResults(response.data);

@@ -19,6 +19,11 @@ import "./App.css";
 import SetStart from "./components/UserComponent/AcadComponents/SetStart";
 import FetchApproved from "./components/UserComponent/AcadComponents/FetchApproved";
 import FetchUnapprovedResults from "./components/UserComponent/HodComponents/FetchUnapprovedResults";
+import ViewResult from "./components/UserComponent/Student/ViewResults";
+import CreateExam from "./components/UserComponent/ProfComponents/CreateExam";
+import SessionList from "./components/UserComponent/ProfComponents/SessionList";
+import ResultSession from "./components/UserComponent/ProfComponents/ResultSession";
+import ApprovedResults from "./components/UserComponent/HodComponents/ApprovedResults";
 
 // Custom Protected Route Component
 const ProtectedRoute = ({ element, allowedRoles }) => {
@@ -67,12 +72,26 @@ function App() {
           path="/exam/:sessionId"
           element={<ProtectedRoute element={<ExamPage />} allowedRoles={[1]} />}
         />
-        {/* <Route
+        <Route
           path="/result"
           element={
-            <ProtectedRoute element={<Result />} allowedRoles={[1]} />
+            <ProtectedRoute element={<ViewResult />} allowedRoles={[1]} />
           }
-        /> */}
+        />
+
+        {/* Professor Routes */}
+        <Route
+          path="/new-exam"
+          element={<ProtectedRoute element={<CreateExam />} allowedRoles={[2]} />}
+        />
+        <Route
+          path="/check-exam"
+          element={<ProtectedRoute element={<SessionList />} allowedRoles={[2]} />}
+        />
+        <Route
+          path="/check-exam/:sessionId"
+          element={<ProtectedRoute element={<ResultSession />} allowedRoles={[2]} />}
+        />
 
         {/* HoD Routes */}
         <Route
@@ -81,22 +100,12 @@ function App() {
             <ProtectedRoute element={<FetchUnapprovedResults />} allowedRoles={[3]} />
           }
         />
-        {/* <Route
-          path="/approved-results"
-          element={
-            <ProtectedRoute element={<ApprovedResults />} allowedRoles={["Head_of_Department"]} />
-          }
-        /> */}
-
-        {/* Professor Routes */}
         <Route
-          path="/new-exam"
-          element={<ProtectedRoute element={<ProfNavbar />} allowedRoles={["Professor"]} />}
+          path="/hod/approved-results"
+          element={
+            <ProtectedRoute element={<ApprovedResults />} allowedRoles={[3]} />
+          }
         />
-        {/* <Route
-          path="/check-exam"
-          element={<ProtectedRoute element={<CheckExam />} allowedRoles={["Professor"]} />}
-        /> */}
 
         {/* Academic Coordinator Routes */}
         <Route

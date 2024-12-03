@@ -1,53 +1,56 @@
-# ExamSystem: A MERN Stack Examination Management System
+# College Exam Management System (CEMS)
 
-## **Overview**
-ExamSystem is a secure and user-friendly MERN stack web application designed to streamline the examination process for colleges. By leveraging Role-Based Access Control (RBAC), the platform ensures that each user—whether a Student, Professor, HOD, or Academic Coordinator—has access to resources and functionalities tailored to their role. The integration of Google OAuth provides secure authentication, and JWT-based middlewares protect backend endpoints.
+The **College Exam Management System (CEMS)** is a robust tool designed to simplify and manage exam processes for academic institutions. It provides tailored Role-Based Access Control (RBAC) functionalities for different stakeholders, including **Students**, **Professors**, **Heads of Departments (HODs)**, and **Academic Coordinators**, ensuring smooth communication and secure handling of exam-related tasks.
 
----
+## 🚀 Features
 
-## **Features**
+### Core Functionalities
+1. **Exam Creation**:
+   - Professors create exams and we assign them unique `sessionIds` based on course codes.
+2. **Exam Scheduling**:
+   - Academic Coordinators set the start time for exams. Students can only attempt exams after the designated start time.
+3. **Exam Attempt**:
+   - Students attempt exams during the scheduled window and submit their responses.
+4. **Submission Review**:
+   - Professors view all student submissions for a session and assign marks for each question. Marks are submitted one student at a time.
+5. **Result Approval**:
+   - HODs review the exam status based on the number of evaluated submissions and decide whether to approve the results.
+6. **Result Publication**:
+   - Academic Coordinators publish the results after HOD approval. Students can view their results only after publication.
 
-### **Role-Specific Functionality**
-1. **Student**:
-   - Attempt assigned exams and submit responses.
-   - View exam details, including dates and seating arrangements.
-   - Submit grievances for revaluation.
+### Security Features
+1. **OAuth Integration**:
+   - Secure authentication for all users.
+2. **JWT Authentication**:
+   - Backend routes are protected using JSON Web Tokens (JWT) and middleware. Each role (Student, Professor, HOD, Academic Coordinator) can only access authorized routes.
 
-2. **Professor**:
-   - Access and evaluate responses submitted by students.
-   - Grade students and forward results to the HOD.
-
-3. **HOD (Head of Department)**:
-   - Review and approve submitted results.
-   - Evaluate revaluation requests submitted by students.
-   - Forward approved results to the Academic Coordinator.
-
-4. **Academic Coordinator**:
-   - Schedule exams and allocate seating arrangements.
-   - Notify students and professors of exam schedules.
-
----
-
-### **Security Highlights**
-- **Google OAuth Authentication**: Secure login for all users via Google.
-- **RBAC with JWT Middleware**: 
-  - Middleware validates JWT tokens to ensure authorized access to APIs based on user roles.
-  - Unauthorized users are blocked from accessing restricted resources.
+### Technology Stack
+- **Frontend**: React, Redux, Tailwind CSS
+- **Backend**: Node.js, Express.js, Mongoose
+- **Database**: MongoDB
+- **Authentication**: OAuth, JWT
+- **Form Validation**: Formik, Yup
+- **HTTP Requests**: Axios
 
 ---
 
-## **Tech Stack**
+## 🛠️ How It Works
 
-### **Frontend**
-- **React.js** (with Vite for fast development and build)
-- **Redux** for state management
-- **Tailwind CSS** for responsive and modern UI
-
-### **Backend**
-- **Node.js** with **Express.js**
-- **MongoDB** for database storage
-- **Mongoose** for schema and data modeling
-- **JWT** for token-based authentication
+### Workflow Overview
+1. **For Professors**:
+   - Login to the system.
+   - Create an exam, generating a unique `sessionId`.
+   - Review student submissions, assign marks, and submit results.
+2. **For Academic Coordinators**:
+   - Set the start time for exams.
+   - Approve and publish results after HOD approval.
+3. **For HODs**:
+   - View exam result statuses.
+   - Approve results for publication after reviewing the number of evaluated submissions.
+4. **For Students**:
+   - Login to view available exams.
+   - Attempt exams during the allowed time window.
+   - View results after publication.
 
 ---
 
@@ -111,36 +114,6 @@ ExamSystem is a secure and user-friendly MERN stack web application designed to 
     npm install  
     npm run dev  
     ```  
-
-## API Endpoints  
-
-### Authentication  
-- **POST /auth/google/login**  
-  Handles Google OAuth login.  
-
-### Student  
-- **GET /student/fetch/:sessionId**  
-  Fetches exam details for a student.  
-- **POST /student/submit-exam**  
-  Submits exam answers.  
-
-### Professor  
-- **GET /professor/view-responses**  
-  View student responses.  
-- **POST /professor/grade**  
-  Grade and forward results to the HOD.  
-
-### HOD  
-- **GET /hod/view-results**  
-  Review results submitted by professors.  
-- **POST /hod/approve-results**  
-  Approve and forward results to the Academic Coordinator.  
-
-### Academic Coordinator  
-- **POST /coordinator/schedule-exam**  
-  Schedule exams and allocate seating.  
-- **POST /coordinator/notify**  
-  Notify students and professors.  
 
 ## Notes  
 Make sure to replace placeholders like `your_jwt_secret`, `your_google_client_id`, and `your_google_client_secret` with your actual credentials before running the application.

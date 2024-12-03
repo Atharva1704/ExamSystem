@@ -12,7 +12,7 @@ import AcadNavbar from "./components/UserComponent/Navbar/AcadNavbar";
 // import NewExam from "./components/Professor/NewExam";
 // import CheckExam from "./components/Professor/CheckExam";
 // import FetchApproved from "./components/AcademicCoordinator/FetchApproved";
-import Exam from "./components/UserComponent/Student/Exam";
+import Exam from "./components/UserComponent/Student/FetchExams";
 import ExamPage from "./components/UserComponent/Student/ExamPage";
 // import Result from "./components/Student/Result";
 import "./App.css";

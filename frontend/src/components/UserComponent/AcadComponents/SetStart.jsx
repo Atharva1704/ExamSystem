@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axiosInstance from "../../utils/AxiosInstance.js"; // Ensure the path is correct
 
 const SetStart = () => {
     const [exams, setExams] = useState([]);
@@ -8,9 +9,8 @@ const SetStart = () => {
     useEffect(() => {
         const fetchExams = async () => {
             try {
-                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/acad/undefined-start-time`);
-                const data = await response.json();
-                setExams(data);
+                const response = await axiosInstance.get("/acad/undefined-start-time"); // Use axiosInstance
+                setExams(response.data);
             } catch (error) {
                 console.error("Error fetching exams:", error);
             }
@@ -27,13 +27,12 @@ const SetStart = () => {
 
         setLoading(true);
         try {
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/acad/set-start-time/${sessionId}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ startTime }),
-            });
+            const response = await axiosInstance.put(
+                `/acad/set-start-time/${sessionId}`,
+                { startTime }
+            );
 
-            if (response.ok) {
+            if (response.status === 200) {
                 alert("Start time updated successfully.");
                 setExams((prevExams) =>
                     prevExams.filter((exam) => exam.sessionId !== sessionId)

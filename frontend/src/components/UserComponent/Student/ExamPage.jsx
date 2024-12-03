@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance"; // Adjust the path as necessary
 import { useSelector } from "react-redux";
 
 const ExamPage = () => {
@@ -18,8 +18,7 @@ const ExamPage = () => {
         // Fetch exam details based on sessionId
         const fetchExamDetails = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/student/fetch/${sessionId}`);
-
+                const response = await axiosInstance.get(`/student/fetch/${sessionId}`);
                 // Only store the required fields from the response
                 const { courseCode, questions } = response.data.exam;
                 setExamDetails({
@@ -55,8 +54,8 @@ const ExamPage = () => {
         onSubmit: async (values) => {
             try {
                 // Send the submission data with JWT token in the Authorization header
-                const response = await axios.post(
-                    `${import.meta.env.VITE_BACKEND_URL}/student/submit-exam`,
+                const response = await axiosInstance.post(
+                    `/student/submit-exam`,
                     {
                         studentEmail: userEmail,
                         sessionId,
@@ -71,7 +70,7 @@ const ExamPage = () => {
                 alert("Exam submitted successfully!");
                 navigate("/exam"); // Redirect to /exam after successful submission
             } catch (error) {
-                alert("Failed to submit the exam.");
+                alert(`Failed to submit the exam. ${error.response?.data?.message}`);
             }
         },
     });
@@ -95,7 +94,7 @@ const ExamPage = () => {
                         {Object.entries(examDetails.questions).map(([questionNumber, questionText]) => (
                             <div key={questionNumber} className="mb-4">
                                 <label htmlFor={`answers[${questionNumber}]`} className="block text-lg font-semibold">
-                                    {`Question ${questionNumber}:`}
+                                    {`${questionNumber}: ${questionText}`}
                                 </label>
                                 <textarea
                                     id={`answers[${questionNumber}]`}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/userSlice"; // Update the path as needed
+import axiosInstance from "../../utils/axiosInstance"; // Adjust the path if necessary
 
 const ViewResult = () => {
     const { email: studentEmail } = useSelector(selectUser); // Fetch student email from Redux store
@@ -22,8 +22,8 @@ const ViewResult = () => {
         setResult(null);
 
         try {
-            const response = await axios.post(
-                `${import.meta.env.VITE_BACKEND_URL}/student/view-result/${sessionId}`,
+            const response = await axiosInstance.post(
+                `/student/view-result/${sessionId}`,
                 { studentEmail } // Send student email in the body
             );
             console.log(response.data);

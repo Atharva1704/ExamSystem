@@ -4,7 +4,6 @@ import mongoose from "mongoose";
 import cors from "cors";
 import 'dotenv/config';
 import authRoutes from "./routes/auth.js";
-import examRoutes from "./routes/exam.js";
 import studentRoutes from "./routes/student.js";
 import profRoutes from "./routes/prof.js";
 import hodRoutes from "./routes/hod.js"
@@ -40,7 +39,6 @@ app.get('/academic-coordinator-route', isAcademicCoordinator, (req, res) => {
 });
 
 app.use("/auth", authRoutes);
-app.use("/exam", examRoutes);
 app.use("/student", studentRoutes);
 app.use("/professor", profRoutes);
 app.use("/hod", hodRoutes);

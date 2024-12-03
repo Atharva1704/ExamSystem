@@ -58,6 +58,7 @@ export const approveResult = async (req, res) => {
 // Controller to fetch all results where academic coordinator approval is false
 export const fetchAllApprovedResults = async (req, res) => {
     try {
+        console.log("inside Fetch all");
         // Fetch all results where academicCoordinatorApproval is false
         const results = await ApprovedResult.find({ academicCoordinatorApproval: false });
         console.log(results);

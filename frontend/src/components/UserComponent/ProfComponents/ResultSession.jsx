@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import { useSelector } from "react-redux";
+import axiosInstance from "../../utils/axiosInstance"; // Ensure the path to axiosInstance is correct
+import { selectUser } from "../../../redux/userSlice"; // Adjust the path if needed
 
 const ResultSession = () => {
     const { sessionId } = useParams(); // Capture sessionId from URL
+    const { email: professorEmail } = useSelector(selectUser); // Fetch professor email from Redux store
     const [submissions, setSubmissions] = useState([]);
     const [hodEmail, setHodEmail] = useState(""); // HOD Email State
     const [academicCoordinatorEmail, setAcademicCoordinatorEmail] = useState(""); // Academic Coordinator Email State
@@ -13,7 +16,7 @@ const ResultSession = () => {
         // Fetch submissions when component mounts
         const fetchSubmissions = async () => {
             try {
-                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/professor/fetch-submission-exams/${sessionId}`);
+                const response = await axiosInstance.get(`/professor/fetch-submission-exams/${sessionId}`);
                 console.log("response is: ", response.data.submissions);
                 setSubmissions(response.data.submissions);
             } catch (error) {
@@ -42,18 +45,14 @@ const ResultSession = () => {
         );
         const courseCode = sessionId.slice(0, 5);
         try {
-
-            const response = await axios.post(
-                `${import.meta.env.VITE_BACKEND_URL}/professor/submit-marks/${studentEmail}`,
-                {
-                    sessionId,
-                    courseCode, // Derived courseCode
-                    marks: cumulativeMarks,
-                    professorEmail: "professor@example.com", // Replace with professor's email from Redux or context
-                    hodEmail,
-                    academicCoordinatorEmail,
-                }
-            );
+            const response = await axiosInstance.post(`/professor/submit-marks/${studentEmail}`, {
+                sessionId,
+                courseCode, // Derived courseCode
+                marks: cumulativeMarks,
+                professorEmail, // Professor email from Redux store
+                hodEmail,
+                academicCoordinatorEmail,
+            });
             alert("Marks submitted successfully!");
         } catch (error) {
             console.error("Error submitting marks:", error);

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
+import axiosInstance from "../../utils/AxiosInstance.js"; // Adjust the path if needed
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/userSlice";
 
@@ -39,26 +39,23 @@ const CreateExam = () => {
                 // Convert questions, answers, and students to desired formats
                 const questionsMap = {};
                 const answersMap = {};
-                console.log("questions: ", questions);
-                console.log("answers: ", answers);
+
                 questions.forEach((q, index) => {
-                    console.log("inside questions: ", q);
                     if (q.question.trim()) questionsMap[index + 1] = q.question.trim();
                 });
-                answers.forEach((a, index) => {
 
-                    console.log("inside answers: ", a.question);
+                answers.forEach((a, index) => {
                     if (a.question.trim()) answersMap[index + 1] = a.question.trim();
                 });
 
-                const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/professor/create-exam`, {
+                const response = await axiosInstance.post("/professor/create-exam", {
                     ...values,
                     paperSetter,
                     questions: questionsMap,
                     answerkey: answersMap,
                     studentsEnrolled: students.filter((email) => email.trim()),
                 });
-                // console.log(response);
+
                 alert("Exam created successfully!");
                 resetForm();
                 setQuestions([{ question: "" }]);
@@ -74,7 +71,6 @@ const CreateExam = () => {
     // Handlers for dynamic fields
     const addField = (setter, array) => setter([...array, { question: "" }]);
     const removeField = (setter, array, index) => setter(array.filter((_, i) => i !== index));
-
     const updateField = (setter, array, index, value) => {
         const updatedArray = [...array];
         updatedArray[index] = { question: value };

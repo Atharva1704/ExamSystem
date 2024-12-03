@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../utils/AxiosInstance.js"; // Adjust the path as needed
 
 const ApprovedResults = () => {
     const [results, setResults] = useState([]);
@@ -10,17 +10,14 @@ const ApprovedResults = () => {
         // Fetch approved results when the component mounts
         const fetchApprovedResults = async () => {
             try {
-                // const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/hod/approved-results`);
-                console.log("Inside FetchAprroved component");
-                const response = await axios.get("http://localhost:3001/hod/fetch-approved-result");
+                console.log("Fetching approved results...");
+                const response = await axiosInstance.get("/hod/fetch-approved-result"); // API endpoint
                 console.log(response);
                 setResults(response.data.results);
-
-                setLoading(false);
             } catch (err) {
-                console.log("error is: ", err);
                 console.error("Error fetching approved results:", err);
                 setError("Failed to load approved results.");
+            } finally {
                 setLoading(false);
             }
         };
@@ -52,7 +49,8 @@ const ApprovedResults = () => {
                                     <strong>HOD Approval:</strong> {result.hodApproval ? "Approved" : "Pending"}
                                 </p>
                                 <p>
-                                    <strong>Academic Coordinator Approval:</strong> {result.academicCoordinatorApproval ? "Approved" : "Pending"}
+                                    <strong>Academic Coordinator Approval:</strong>{" "}
+                                    {result.academicCoordinatorApproval ? "Approved" : "Pending"}
                                 </p>
                                 <p>
                                     <strong>Approval Date:</strong> {new Date(result.approvalDate).toLocaleString()}
@@ -60,11 +58,12 @@ const ApprovedResults = () => {
                                 <div>
                                     <h3 className="font-semibold">Marks:</h3>
                                     <ul>
-                                        {Array.from(result.marks?.entries() || []).map(([studentEmail, marks]) => (
-                                            <li key={studentEmail}>
-                                                {studentEmail}: {marks}
-                                            </li>
-                                        ))}
+                                        {result.marks &&
+                                            Object.entries(result.marks).map(([studentEmail, marks]) => (
+                                                <li key={studentEmail}>
+                                                    {studentEmail}: {marks}
+                                                </li>
+                                            ))}
                                     </ul>
                                 </div>
                             </div>

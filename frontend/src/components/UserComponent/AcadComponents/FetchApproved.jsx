@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/userSlice"; // Update the path as needed
+import axiosInstance from "../../utils/AxiosInstance.js"; // Path to your Axios instance
 
 const FetchApproved = () => {
     const [approvedResults, setApprovedResults] = useState([]);
@@ -17,7 +17,7 @@ const FetchApproved = () => {
         setError(null);
 
         try {
-            const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/acad/fetch-approved-results`); // Replace with your API endpoint
+            const response = await axiosInstance.get("/acad/fetch-approved-results"); // Use Axios instance
             console.log(response.data.results);
             setApprovedResults(response.data.results);
         } catch (err) {
@@ -42,12 +42,9 @@ const FetchApproved = () => {
         setError(null);
 
         try {
-            await axios.put(
-                `${import.meta.env.VITE_BACKEND_URL}/acad/approve-result/${sessionId}`,
-                {
-                    academicCoordinatorEmail,
-                }
-            );
+            await axiosInstance.put(`/acad/approve-result/${sessionId}`, {
+                academicCoordinatorEmail,
+            });
             setApprovedResults((prevResults) =>
                 prevResults.filter((result) => result.sessionId !== sessionId)
             );
@@ -58,7 +55,6 @@ const FetchApproved = () => {
             setLoading(false);
         }
     };
-
 
     // Fetch results on component mount
     useEffect(() => {

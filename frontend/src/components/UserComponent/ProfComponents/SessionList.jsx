@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/userSlice";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../utils/axiosInstance"; // Ensure the path is correct
 
 const SessionList = () => {
     const navigate = useNavigate();
@@ -19,9 +19,7 @@ const SessionList = () => {
             setError(null);
 
             try {
-                const response = await axios.get(
-                    `${import.meta.env.VITE_BACKEND_URL}/professor/fetch-my-exams/${professorEmail}`
-                );
+                const response = await axiosInstance.get(`/professor/fetch-my-exams/${professorEmail}`);
                 setSessionIds(response.data.sessionIds);
             } catch (err) {
                 setError(err.response?.data?.message || "Failed to fetch session IDs.");

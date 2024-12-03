@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import axios from "axios";
+import axiosInstance from "../../utils/AxiosInstance.js"; // Adjust the path as needed
 import { selectUser } from "../../../redux/userSlice.js";
 
 const FetchUnapprovedResults = () => {
@@ -21,12 +21,13 @@ const FetchUnapprovedResults = () => {
         setError(null);
 
         try {
-            const response = await axios.get(
-                `${import.meta.env.VITE_BACKEND_URL}/hod/fetch-unapproved-results/${hodEmail}`
+            const response = await axiosInstance.get(
+                `/hod/fetch-unapproved-results/${hodEmail}`
             );
             console.log(response.data);
             setUnapprovedResults(response.data);
         } catch (err) {
+            console.error("Error fetching results:", err);
             setError("Failed to fetch unapproved results");
         } finally {
             setLoading(false);
@@ -44,13 +45,13 @@ const FetchUnapprovedResults = () => {
         setError(null);
 
         try {
-            const response = await axios.post(
-                `${import.meta.env.VITE_BACKEND_URL}/hod/approve-result-hod`,
+            const response = await axiosInstance.post(
+                `/hod/approve-result-hod`,
                 {
                     sessionId: result.sessionId,
                     hodEmail,
                     academicCoordinatorEmail: result.academicCoordinatorEmail,
-                    professorEmail: result.professorEmail, // Pass professorEmail
+                    professorEmail: result.professorEmail,
                 }
             );
             console.log(response);
@@ -61,6 +62,7 @@ const FetchUnapprovedResults = () => {
                 prevResults.filter((r) => r.sessionId !== result.sessionId)
             );
         } catch (err) {
+            console.error("Error approving result:", err);
             setError("Failed to approve result");
         } finally {
             setLoading(false);

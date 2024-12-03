@@ -86,7 +86,7 @@ export const viewResult = async (req, res) => {
 export const submitExam = async (req, res) => {
     try {
         const { studentEmail, sessionId, answers } = req.body;
-
+        console.log("inside subitexam", req.body);
         // Validate inputs
         if (!studentEmail || !sessionId || !answers) {
             return res.status(400).json({ message: "All fields are required." });
@@ -95,12 +95,14 @@ export const submitExam = async (req, res) => {
         // Check if the exam exists using the sessionId
         const exam = await Exam.findOne({ sessionId });
         if (!exam) {
+            console.log("p1");
             return res.status(404).json({ message: "Exam not found for the given session ID." });
         }
 
         // Check if the student has already submitted for this exam
         const existingSubmission = await Submission.findOne({ studentEmail, sessionId });
         if (existingSubmission) {
+            console.log("p2");
             return res.status(400).json({ message: "You have already submitted this exam." });
         }
 

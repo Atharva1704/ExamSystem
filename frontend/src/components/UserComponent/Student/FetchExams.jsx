@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import axios from "axios";
 import { Button } from "../../ui/button"; // Assuming you're using a custom button component
 import { useNavigate } from "react-router-dom"; // For navigation
+import axiosInstance from "../../utils/axiosInstance"; // Ensure the path is correct
 
 const ExamComponent = () => {
     // Get the user's email from Redux state
@@ -16,9 +16,9 @@ const ExamComponent = () => {
         // Fetch exams for the student based on email
         const fetchExams = async () => {
             try {
-                // Use BACKEND_URL from the environment variables
-                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/student/${userEmail}`);
-                console.log(response.data.exams)
+                // Use axiosInstance
+                const response = await axiosInstance.get(`/student/${userEmail}`);
+                console.log(response.data.exams);
                 setExams(response.data.exams); // Assuming the response contains an array of exam details
                 setLoading(false); // Stop loading
             } catch (error) {
@@ -36,7 +36,7 @@ const ExamComponent = () => {
     const handleStartExam = async (sessionId) => {
         try {
             // Fetch the exam start time and check if it has already passed
-            const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/student/fetch/${sessionId}`);
+            const response = await axiosInstance.get(`/student/fetch/${sessionId}`);
             const exam = response.data.exam; // Assuming response contains exam details
             console.log(exam);
             const currentTime = new Date();

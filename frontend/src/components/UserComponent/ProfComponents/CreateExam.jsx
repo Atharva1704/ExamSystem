@@ -78,7 +78,7 @@ const CreateExam = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+        <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6 w-[50vw]">
             <div className="bg-white p-6 rounded shadow-md w-full max-w-lg">
                 <h1 className="text-2xl font-bold text-gray-800 mb-4">Create Exam</h1>
                 <form onSubmit={formik.handleSubmit} className="space-y-4">

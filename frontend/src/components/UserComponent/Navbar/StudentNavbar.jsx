@@ -22,7 +22,7 @@ const StudentNavbar = () => {
         }
     }, [activeRole, selectedRole, dispatch]);
     return (
-        <nav className="bg-blue-600 text-white px-4 py-2 flex justify-between items-center shadow-md">
+        <nav className="bg-white-600 text-white px-4 py-2 flex justify-between items-center shadow-md">
             {/* Title */}
             <div className="text-xl font-bold">
                 <Link to="/">ExamSystem</Link>

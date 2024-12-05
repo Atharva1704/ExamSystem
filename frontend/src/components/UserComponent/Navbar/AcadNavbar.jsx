@@ -25,20 +25,22 @@ const AcadNavbar = () => {
         <nav className="bg-white-600 text-white px-4 py-2 flex justify-between items-center shadow-md">
             {/* Title */}
             <div className="text-xl font-bold">
-                <Link to="/">ExamSystem</Link>
+                <Link to="/" className="text-blue-500">
+                    ExamSystem
+                </Link>
             </div>
             {/* Links */}
             <div className="flex space-x-4">
                 <Link
                     to="/set-exam-start"
-                    className="hover:bg-teal-700 px-3 py-2 rounded transition duration-200"
+                    className="text-blue-500 hover:bg-teal-700 px-3 py-2 rounded transition duration-200"
                 >
                     Set Start Time
                 </Link>
 
                 <Link
                     to="/fetch-approved"
-                    className="hover:bg-teal-700 px-3 py-2 rounded transition duration-200"
+                    className="text-blue-500 hover:bg-teal-700 px-3 py-2 rounded transition duration-200"
                 >
                     Fetch Approved
                 </Link>
@@ -48,6 +50,7 @@ const AcadNavbar = () => {
                 <Logout />
             </div>
         </nav>
+
     );
 };
 

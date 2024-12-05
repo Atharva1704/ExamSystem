@@ -17,7 +17,7 @@ const Logout = () => {
 
     return (
         <div className="logout-container">
-            <Button onClick={handleLogout} variant="secondary">
+            <Button onClick={handleLogout} variant="secondary" className=" text-white">
                 Logout
             </Button>
         </div>

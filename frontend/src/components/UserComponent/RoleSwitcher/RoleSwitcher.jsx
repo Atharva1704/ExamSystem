@@ -34,7 +34,7 @@ const RoleSwitcher = () => {
                 <select
                     value={selectedRole || ""}
                     onChange={handleRoleChange}
-                    className="block w-full max-w-sm mx-auto bg-black border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="block w-full text-white max-w-sm mx-auto bg-black border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
                 >
                     {availableRoles.map((role) => (
                         <option key={role} value={role}>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import axiosInstance from "../../utils/axiosInstance"; // Ensure the path to axiosInstance is correct
+import axiosInstance from "../../utils/AxiosInstance.js"; // Ensure the path to axiosInstance is correct
 import { selectUser } from "../../../redux/userSlice"; // Adjust the path if needed
 
 const ResultSession = () => {

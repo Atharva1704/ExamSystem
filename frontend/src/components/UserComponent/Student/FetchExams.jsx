@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Button } from "../../ui/button"; // Assuming you're using a custom button component
 import { useNavigate } from "react-router-dom"; // For navigation
-import axiosInstance from "../../utils/axiosInstance"; // Ensure the path is correct
+import axiosInstance from "../../utils/AxiosInstance.js"; // Ensure the path is correct
 
 const ExamComponent = () => {
     // Get the user's email from Redux state

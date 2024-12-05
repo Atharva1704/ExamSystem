@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import axiosInstance from "../../utils/axiosInstance"; // Adjust the path as necessary
+import axiosInstance from "../../utils/AxiosInstance.js"; // Adjust the path as necessary
 import { useSelector } from "react-redux";
 
 const ExamPage = () => {

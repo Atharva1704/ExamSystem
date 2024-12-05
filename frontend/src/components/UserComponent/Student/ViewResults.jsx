@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/userSlice"; // Update the path as needed
-import axiosInstance from "../../utils/axiosInstance"; // Adjust the path if necessary
+import axiosInstance from "../../utils/AxiosInstance.js"; // Adjust the path if necessary
 
 const ViewResult = () => {
     const { email: studentEmail } = useSelector(selectUser); // Fetch student email from Redux store

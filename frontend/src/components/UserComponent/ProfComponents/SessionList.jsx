@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/userSlice";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../../utils/axiosInstance"; // Ensure the path is correct
+import axiosInstance from "../../utils/AxiosInstance.js"; // Ensure the path is correct
 
 const SessionList = () => {
     const navigate = useNavigate();
